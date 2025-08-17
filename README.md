@@ -6,25 +6,19 @@ This project provides a **Composer plugin** that automatically copies a ready-to
 
 ## Supported Variants
 
-This template supports **two main variants** for your Docker base image:
+This template supports Ubuntu 22.04 for your Docker base image:
 
-### 1. Ubuntu Base Image (~22.04.0-rc1)
+### Ubuntu Base Image (~22.04.0-rc1)
 
 - Uses `ubuntu:22.04` as the base image.
 - Suitable for projects that need more control over the OS environment or require additional non-PHP services.
 - Installs PHP, Nginx, and other dependencies via `apt`, based on an external `apt-packages.env` file.
 - Provides a more flexible and extensible environment for advanced use cases.
 
----
-
-## Versions
-
-- **Ubuntu Variant:** `~1.22.0-rc1`
-
-You can specify the version you want to use when requiring the package:
+- You can specify the version you want to use when requiring the package:
 
 ```sh
-composer require --dev razeem/docker-base-template-mssql:~22.04.0-rc1
+  composer require --dev razeem/docker-base-template-mssql:~22.04.0-rc1
 ```
 
 ---
@@ -39,11 +33,11 @@ composer require --dev razeem/docker-base-template-mssql:~22.04.0-rc1
   If not, a random 3-character string is generated and used.
 
 - **Environment Variable Management:**  
-  Uses a generic `.env.dist` file for environment variables, which you can copy to `.env` and customize.
+  Uses a generic `.env.dist` file for environment variables, which is to `.env` and customize according to your needs.
 
 - **Extensible Docker Stack:**  
-  Includes configuration for PHP, Nginx, SSH, and other common services.  
-  Installs system packages based on an external `apt-packages.env` file (especially in the Ubuntu variant).
+  - Includes configuration for PHP, Nginx, SSH, and other common services.  
+  - Installs system packages based on an external `apt-packages.env` file (especially in the Ubuntu variant).
 
 ---
 
@@ -64,19 +58,17 @@ In the `repositories` section of your `composer.json`, add:
 
 Specify a version:
 ```sh
-composer require --dev razeem/docker-base-template:~1.22.0-rc1
-composer require --dev razeem/docker-base-template:~2.83.0-rc1
+composer require --dev razeem/docker-base-template:~22.04.0-rc1
 ```
 
 ### 3. On Install/Update
 
 - The plugin will copy the contents of its `dist/` directory into your project root.
-- Create a file called `project-code.txt` in your project root folder and add your project code (e.g., your JIRA project code); its value will be used for Docker Compose service and folder names.
+- Enter your project (Jira) code which will be used for naming the containers in local setup
 
 ### 4. Customize
 
 - Edit `docker-compose.yml` and `docker-compose-vm.yml` as needed.
-- Copy `.env.dist` to `.env` and set your environment variables.
 - Adjust `apt-packages.env` to add/remove system packages for your stack (especially for the Ubuntu variant).
 
 ---
@@ -97,10 +89,6 @@ composer require --dev razeem/docker-base-template:~2.83.0-rc1
 
 ## Customization
 
-- **Project Name:**  
-  Place a `project-code.txt` file in your project root with your desired project code.  
-  The plugin will use this for service and folder names in Compose files.
-
 - **System Packages:**  
   Edit `Docker/app/apt-packages.env` to add/remove Ubuntu packages (for Ubuntu variant).
 
@@ -111,18 +99,9 @@ composer require --dev razeem/docker-base-template:~2.83.0-rc1
 
 ## Test Connectivity
 
+- Mention your
+`sqlcmd -S <project_name_database>,1433 -U SA -P 'reallyStrongPwd123' -Q "SELECT @@VERSION"`
 
-sqlcmd -S sql,1433 -U SA -P 'reallyStrongPwd123' -Q "SELECT @@VERSION"
-
-
----
-## How It Works
-
-The plugin's main logic is in [`CopyDistPlugin.php`](src/Composer/CopyDistPlugin.php):
-
-- On `composer install` or `composer update`, it copies the `dist/` folder to your project.
-- It replaces `project_name` and `project_folder` placeholders in Compose files.
-- It ensures your Docker environment is ready to use out of the box.
 
 ---
 
@@ -141,4 +120,4 @@ MIT
 ## Issues
 
 Report bugs or request features at:  
-[https://github.com/razeem/docker-base-template/issues](https://github.com/razeem/docker-base-template/issues)
+[https://github.com/razeem/docker-base-template-mssql/issues](https://github.com/razeem/docker-base-template-mssql/issues)
