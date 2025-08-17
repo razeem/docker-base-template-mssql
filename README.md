@@ -8,9 +8,9 @@ This project provides a **Composer plugin** that automatically copies a ready-to
 
 This template supports **two main variants** for your Docker base image:
 
-### 1. Ubuntu Base Image (~24.04.0-rc1)
+### 1. Ubuntu Base Image (~22.04.0-rc1)
 
-- Uses `ubuntu:24.04` as the base image.
+- Uses `ubuntu:22.04` as the base image.
 - Suitable for projects that need more control over the OS environment or require additional non-PHP services.
 - Installs PHP, Nginx, and other dependencies via `apt`, based on an external `apt-packages.env` file.
 - Provides a more flexible and extensible environment for advanced use cases.
@@ -19,7 +19,7 @@ This template supports **two main variants** for your Docker base image:
 
 ## Versions
 
-- **Ubuntu Variant:** `~1.24.0-rc1`
+- **Ubuntu Variant:** `~1.22.0-rc1`
 
 You can specify the version you want to use when requiring the package:
 
@@ -64,7 +64,7 @@ In the `repositories` section of your `composer.json`, add:
 
 Specify a version:
 ```sh
-composer require --dev razeem/docker-base-template:~1.24.0-rc1
+composer require --dev razeem/docker-base-template:~1.22.0-rc1
 composer require --dev razeem/docker-base-template:~2.83.0-rc1
 ```
 
