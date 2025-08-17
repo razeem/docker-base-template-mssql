@@ -1,0 +1,13 @@
+# Sample docker compose file for spinning up docker in virtual machine
+services:
+  project_name:
+    build: ./
+    ports:
+      - ${DOCKER_APP_PORT}:80
+    volumes:
+      # modify and provide the appropriate paths
+      - /var/www/media_files/project_folder/files:/app/web/sites/default/files
+      - /var/www/html/project_folder/web/modules/contrib:/app/web/modules/contrib
+      - /var/www/html/project_folder/config:/app/config
+    networks:
+      - default
