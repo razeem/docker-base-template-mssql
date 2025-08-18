@@ -154,9 +154,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 # Copy SSL certificate to the application directory
 COPY Docker/app/SslCertificate.crt.pem /app
 
-# Copy Drupal settings
-COPY Docker/app/settings.php /var/www/html/web/sites/default/
-
 # create folder for assets and php files outside files folder (default location)
 RUN mkdir -p /var/www/html/web/sites/default/dist/assets/css \
     /var/www/html/web/sites/default/dist/assets/js \
