@@ -795,16 +795,24 @@ switch (isset($_ENV['DRUPAL_NGINX_ENV']) ? $_ENV['DRUPAL_NGINX_ENV'] : 'dev') {
 }
 
 // Database settings.
-$databases['default']['default'] = [
+$databases['default']['default'] = array(
   'database' => isset($_ENV['DRUPAL_MULTISITE_DB_NAME']) ? $_ENV['DRUPAL_MULTISITE_DB_NAME'] : '',
   'username' => isset($_ENV['DRUPAL_MULTISITE_DB_USERNAME']) ? $_ENV['DRUPAL_MULTISITE_DB_USERNAME'] : '',
   'password' => isset($_ENV['DRUPAL_MULTISITE_DB_PASSWORD']) ? $_ENV['DRUPAL_MULTISITE_DB_PASSWORD'] : '',
   'prefix' => '',
   'host' => isset($_ENV['DRUPAL_DB_HOST']) ? $_ENV['DRUPAL_DB_HOST'] : '',
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-];
+  'port' => '1433',
+  'namespace' => 'Drupal\\sqlsrv\\Driver\\Database\\sqlsrv',
+  'schema' => 'dbo',
+  'cache_schema' => 0,
+  'autoload' => 'modules/contrib/sqlsrv/src/Driver/Database/sqlsrv',
+  'encrypt' => 0,
+  'trust_server_certificate' => 0,
+  'multi_subnet_failover' => 0,
+  'driver' => 'sqlsrv',
+);
+
+$config['system.logging']['error_level'] = 'verbose';
 
 // Add SSL certificate except for local build.
 if (!$_ENV['IS_LOCAL_DOCKER_PROJECT'] && !$_ENV['IS_DDEV_PROJECT']) {
