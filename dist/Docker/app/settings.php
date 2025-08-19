@@ -801,9 +801,15 @@ $databases['default']['default'] = [
   'password' => isset($_ENV['DRUPAL_MULTISITE_DB_PASSWORD']) ? $_ENV['DRUPAL_MULTISITE_DB_PASSWORD'] : '',
   'prefix' => '',
   'host' => isset($_ENV['DRUPAL_DB_HOST']) ? $_ENV['DRUPAL_DB_HOST'] : '',
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
+  'port' => '1433',
+  'namespace' => 'Drupal\\sqlsrv\\Driver\\Database\\sqlsrv',
+  'schema' => 'dbo',
+  'cache_schema' => 0,
+  'autoload' => 'modules/contrib/sqlsrv/src/Driver/Database/sqlsrv',
+  'encrypt' => 0,
+  'trust_server_certificate' => 0,
+  'multi_subnet_failover' => 0,
+  'driver' => 'sqlsrv',
 ];
 
 // Add SSL certificate except for local build.
