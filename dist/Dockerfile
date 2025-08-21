@@ -1,6 +1,6 @@
 # ------------------------------- base image -----------------------------------
 # Force arm64 architecture
-FROM --platform=linux/arm64 ubuntu:22.04
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -138,7 +138,8 @@ COPY ./web /var/www/html/web
 COPY composer.json /var/www/html/composer.json
 COPY composer.lock /var/www/html/composer.lock
 COPY config /var/www/html/config
-COPY patches /var/www/html/patches
+# Copy patches folder only if it exists
+RUN if [ -d "./patches" ]; then cp -r ./patches /var/www/html/patches; fi
 
 # Set working directory
 WORKDIR /var/www/html
@@ -152,19 +153,21 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
     composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
 
 # Copy SSL certificate to the application directory
-COPY Docker/app/SslCertificate.crt.pem /app
+COPY Docker/app/SslCertificate.crt.pem /var/www/html
 
 # create folder for assets and php files outside files folder (default location)
 RUN mkdir -p /var/www/html/web/sites/default/dist/assets/css \
     /var/www/html/web/sites/default/dist/assets/js \
     /var/www/html/web/sites/default/dist/php \
-    /var/www/html/web/sites/default/files
+    /var/www/html/web/sites/default/files \
+    /var/www/html/web/sites/default/files/private/logs/
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 755 /var/www/html/web/sites/default/files \
-    && chmod -R 755 /var/www/html/web/sites/default/dist
+    && chmod -R 755 /var/www/html/web/sites/default/dist \
+    && chmod -R 755 /var/www/html/web/sites/default/files/private/logs/
 
 # Expose port 80, 443, and 2222 for SSH
 EXPOSE 80 443 2222
