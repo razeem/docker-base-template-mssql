@@ -90,6 +90,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Azure CLI
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
 # Copy custom SSH configuration (after SSH is installed)
 COPY ./Docker/ssh/sshd_config /etc/ssh/sshd_config
 
@@ -137,7 +140,7 @@ RUN mkdir -p /var/www/html
 COPY ./web /var/www/html/web
 COPY composer.json /var/www/html/composer.json
 COPY composer.lock /var/www/html/composer.lock
-COPY config /var/www/html/config
+RUN if [ -d "./config" ]; then cp -r ./patches /app/config; fi
 # Copy patches folder only if it exists
 RUN if [ -d "./patches" ]; then cp -r ./patches /var/www/html/patches; fi
 
