@@ -167,7 +167,7 @@ class CopyDistPlugin implements PluginInterface, EventSubscriberInterface {
       : $dst . '/.env';
     $envContentDbTemplate = "# {site_name}\n" .
       "DRUPAL_{site_name_upper}_DB_NAME=drupal_docker_{site_name_lower}\n" .
-      "DRUPAL_{site_name_upper}_DB_USERNAME=drupal_docker_{site_name_lower}\n" .
+      "DRUPAL_{site_name_upper}_DB_USERNAME=sa\n" .
       "DRUPAL_{site_name_upper}_DB_PASSWORD=drupal_docker_{site_name_lower}\n" .
       "# {site_name}_redis\n" .
       "DRUPAL_{site_name_upper}_REDIS_HOST=\n" .

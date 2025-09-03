@@ -804,14 +804,14 @@ if (
   isset($_ENV['DRUPAL_MULTISITE_DB_NAME']) && !empty($_ENV['DRUPAL_MULTISITE_DB_NAME']) &&
   isset($_ENV['DRUPAL_MULTISITE_DB_USERNAME']) && !empty($_ENV['DRUPAL_MULTISITE_DB_USERNAME']) &&
   isset($_ENV['DRUPAL_MULTISITE_DB_PASSWORD']) && !empty($_ENV['DRUPAL_MULTISITE_DB_PASSWORD']) &&
-  isset($_ENV['DRUPAL_MULTISITE_DB_HOST']) && !empty($_ENV['DRUPAL_MULTISITE_DB_HOST'])
+  isset($_ENV['DRUPAL_DB_HOST']) && !empty($_ENV['DRUPAL_DB_HOST'])
 ) {
   $databases['default']['default'] = [
     'database' => $_ENV['DRUPAL_MULTISITE_DB_NAME'],
     'username' => $_ENV['DRUPAL_MULTISITE_DB_USERNAME'],
     'password' => $_ENV['DRUPAL_MULTISITE_DB_PASSWORD'],
     'prefix' => '',
-    'host' => $_ENV['DRUPAL_MULTISITE_DB_HOST'],
+    'host' => $_ENV['DRUPAL_DB_HOST'],
     'port' => '1433',
     'namespace' => 'Drupal\\sqlsrv\\Driver\\Database\\sqlsrv',
     'schema' => 'dbo',
@@ -864,7 +864,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 }
 
 // Attach the settings.ddev.php file if it exists.
-if ($_ENV['IS_DDEV_PROJECT'] == 'true' && file_exists(__DIR__ . '/settings.ddev.php')) {
+if (isset($_ENV['IS_DDEV_PROJECT']) && $_ENV['IS_DDEV_PROJECT'] == 'true' && file_exists(__DIR__ . '/settings.ddev.php')) {
   include __DIR__ . '/settings.ddev.php';
 }
 
